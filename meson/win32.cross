@@ -1,0 +1,26 @@
+[constants]
+
+arch = 'x86_64-w64-mingw32-'
+
+[binaries]
+
+c  = arch + 'gcc'
+ar = arch + 'ar'
+
+strip   = arch + 'strip'
+windres = arch + 'windres'
+
+exe_wrapper = 'wine64'
+
+[host_machine]
+
+system = 'windows'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+[built-in options]
+
+c_std = 'c99'
+optimization = 's'
+warning_level = '3'

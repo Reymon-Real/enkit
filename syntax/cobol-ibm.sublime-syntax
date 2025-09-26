@@ -1,0 +1,95 @@
+%YAML 1.2
+
+---
+name: COBOL - IBM
+file_extensions: [ cob, cbl, cobol]
+scope: source.cbl
+
+# *****************
+# *** Variables ***
+# *****************
+
+variables:
+
+# Numbers
+  
+  dec: '[0-9]+'
+  bin: '[01]+b'
+  oct: '[0-8]+o'
+  hex: '[0-9a-f]+h'
+  num: '({{dec}}|{{bin}}|{{oct}}|{{hex}})'
+
+# *******************
+# *** Load Syntax ***
+# *******************
+
+contexts:
+
+  prototype:
+    - include: comments
+
+  main:
+    - include: strings
+    - include: reserved
+    - include: directives
+    - include: vars
+    - include: numbers
+    - include: others
+
+# ****************
+# *** Comments ***
+# ****************
+  
+  comments:
+    - match: '*>'
+      scope: punctuation.definition.comment.cbl
+      push:
+        - meta_scope: comment.line.cbl
+        - match: $\n?
+          pop: true    
+  
+    - match: '*>'
+      scope: punctuation.definition.comment.cbl
+      push:
+        - meta_scope: comment.line.cbl
+        - match: $\n?
+          pop: true
+
+# ***************
+# *** Strings ***
+# ***************
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.cbl
+      push: inside_string
+
+  inside_string:
+    - meta_include_prototype: false   
+  
+    - meta_scope: string.quoted.double.cbl
+  
+    - match: '\\.'
+      scope: constant.character.escape.cbl
+  
+    - match: '"'
+      scope: punctuation.definition.string.end.cbl
+      pop: true
+
+# ************
+# *** Vars ***
+# ************
+  
+  vars:
+    - match: '(?i)({{decimal}})\s+([a-zA-Z][_a-zA-Z0-9]+)\b'
+      captures:
+        1: constant.numeric.cbl
+        2: entity.name.function.asm
+
+# ***************
+# *** Numbers ***
+# ***************
+
+  numbers:
+    - match: '(?i){{num}}\b'
+      scope: constant.numeric.cbl
