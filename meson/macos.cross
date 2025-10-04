@@ -1,0 +1,30 @@
+# SPDX-Licence-Identifier: AGPL-3-or-later
+
+# *************************************
+# *** Author - Eduardo Pozos Huerta ***
+# *** File   - macos.cross          ***
+# *** Date   - 27/09/2025           ***
+# *************************************
+
+[constants]
+
+arch = 'llvm-'
+
+[binaries]
+
+c  = 'clang'
+c_ld = 'lld'
+strip = arch + 'strip'
+
+[host_machine]
+
+system = 'darwin'
+cpu_family = 'aarch64'
+cpu = 'arm64'
+endian = 'little'
+
+[built-in options]
+
+c_std = 'c99'
+optimization = 's'
+warning_level = '3'
